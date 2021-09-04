@@ -51,7 +51,7 @@ jobs:
         source: "./package.json"
         target: "/opt/investment-back/"
         
-    - name: add depence
+    - name: add depence and startup
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -61,4 +61,4 @@ jobs:
         script: |
           cd /opt/investment-back/
           yarn install
-          pm2 start ./dist/main
+          pm2 start ./dist/main.js
