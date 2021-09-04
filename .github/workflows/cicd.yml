@@ -83,4 +83,5 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /opt/investment-back/
+          pm2 stop ./dist/main.js
           pm2 start ./dist/main.js
