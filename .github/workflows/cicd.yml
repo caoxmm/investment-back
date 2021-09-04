@@ -41,37 +41,18 @@ jobs:
         source: "./dist/*"
         target: "/opt/investment-back/"
         
-    - name: copy package.json
+    - name: copy node_modules
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        source: "./package.json"
+        source: "./node_modules/*"
         target: "/opt/investment-back/"
         
-    - name: copy package-lock.json
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "./package-lock.json"
-        target: "/opt/investment-back/"
         
-    - name: copy yarn.lock
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "./yarn.lock"
-        target: "/opt/investment-back/"
-        
-    - name: add depence and startup
+    - name: startup
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -79,6 +60,4 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          cd /opt/investment-back/
-          yarn install
           pm2 start ./dist/main.js
