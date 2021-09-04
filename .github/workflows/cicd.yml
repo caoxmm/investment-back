@@ -31,6 +31,18 @@ jobs:
         yarn install
         yarn build
         
+    - name: startup
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          rm -rf /opt/investment-back/*
+          rm -rf /root/.pm2/logs/main-error.log
+          rm -rf /root/.pm2/logs/main-out.log
+        
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
       with:
