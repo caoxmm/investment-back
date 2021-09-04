@@ -40,3 +40,25 @@ jobs:
         port: ${{ secrets.PORT }}
         source: "./dist/*"
         target: "/opt/investment-back/"
+        
+    - name: copy package.json
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "./package.json"
+        target: "/opt/investment-back/"
+        
+    - name: add depence
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /opt/investment-back/
+          yarn install
+          pm2 start ./dist/main
